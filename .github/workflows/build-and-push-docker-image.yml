@@ -4,8 +4,6 @@ on:
   workflow_dispatch:
   release:
     types: [published]
-env:
-  DOCKER_METADATA_OUTPUT_TAGS: testimage
 
 jobs:
   build:
@@ -56,3 +54,4 @@ jobs:
           cache-to: type=gha,mode=max
         env:
           DOCKER_METADATA_OUTPUT_TAGS: testimage
+          DOCKER_METADATA_OUTPUT_VERSION: 1.0
