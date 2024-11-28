@@ -4,6 +4,8 @@ on:
   workflow_dispatch:
   release:
     types: [published]
+env:
+  DOCKER_METADATA_OUTPUT_TAGS: testimage
 
 jobs:
   build:
