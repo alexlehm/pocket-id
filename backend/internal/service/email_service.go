@@ -10,7 +10,7 @@ import (
 	"github.com/pocket-id/pocket-id/backend/internal/common"
 	"github.com/pocket-id/pocket-id/backend/internal/model"
 	"github.com/pocket-id/pocket-id/backend/internal/utils/email"
-	"gorm.io/gorm"
+//	"gorm.io/gorm"
 	htemplate "html/template"
 	"mime/multipart"
 	"mime/quotedprintable"
@@ -18,16 +18,20 @@ import (
 	"os"
 	ttemplate "text/template"
 	"time"
+	"github.com/pocket-id/pocket-id/backend/testing/db"
+	"github.com/pocket-id/pocket-id/backend/testing/appconfig"
+	"log"
 )
 
 type EmailService struct {
-	appConfigService *AppConfigService
-	db               *gorm.DB
+	appConfigService *appconfig.AppConfigService
+//	db               *gorm.DB
+	db               *db.DB
 	htmlTemplates    map[string]*htemplate.Template
 	textTemplates    map[string]*ttemplate.Template
 }
 
-func NewEmailService(appConfigService *AppConfigService, db *gorm.DB) (*EmailService, error) {
+func NewEmailService(appConfigService *appconfig.AppConfigService, db *db.DB) (*EmailService, error) {
 	htmlTemplates, err := email.PrepareHTMLTemplates(emailTemplatesPaths)
 	if err != nil {
 		return nil, fmt.Errorf("prepare html templates: %w", err)
@@ -49,7 +53,7 @@ func NewEmailService(appConfigService *AppConfigService, db *gorm.DB) (*EmailSer
 func (srv *EmailService) SendTestEmail(recipientUserId string) error {
 	var user model.User
 	if err := srv.db.First(&user, "id = ?", recipientUserId).Error; err != nil {
-		return err
+//		return err
 	}
 
 	return SendEmail(srv,
